@@ -5,7 +5,7 @@ const User = require("../models/User.model");
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
-const verifyToken = require("../middlewares/auth.middlewares")
+const { verifyToken } = require("../middlewares/auth.middlewares")
 
 // POST "/api/auth/signup" => Creating a user document
 router.post("/signup", async (req, res, next) => {
@@ -52,7 +52,8 @@ router.post("/signup", async (req, res, next) => {
       username: username
     })
 
-    res.status(201).json(response)
+    // res.status(201).json(response) // you can send the responso to the Client (if they needed)
+    res.sendStatus(201)
 
   } catch (error) {
     next(error)
@@ -93,6 +94,7 @@ router.post("/login", async(req, res, next) => {
     const payload = {
       _id: foundUser._id,
       email: foundUser.email,
+      role: foundUser.role
       //* if we are using roles, we should ALWAYS also add the user role here
     }
 

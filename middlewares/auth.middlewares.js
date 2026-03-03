@@ -23,4 +23,18 @@ function verifyToken(req, res, next) {
 
 }
 
-module.exports = verifyToken
+function verifyAdmin(req, res, next) {
+  // this is a protection middleware that checks if the user is of type admin
+  // IT WILL ALWAYS BE USED AFTER verifyToken
+
+  if (req.payload.role === "admin") {
+    next() // you are an admin, continue with the route.
+  } else {
+    res.status(401).json({errorMessage: "Route only for admins, you are not an admin, get out"})
+  }
+}
+
+module.exports = {
+  verifyToken,
+  verifyAdmin
+}

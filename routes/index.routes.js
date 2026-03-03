@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const verifyToken = require("../middlewares/auth.middlewares")
+const { verifyToken, verifyAdmin } = require("../middlewares/auth.middlewares")
 
 // ℹ️ Organize and connect all your route files here.
 const authRouter = require("./auth.routes")
@@ -16,6 +16,10 @@ router.get("/example-private-route", verifyToken, (req, res) => {
 
 
   res.send("Here is your user specific private information")
+})
+
+router.get("/example-admin-route", verifyToken, verifyAdmin, (req, res) => {
+  res.send("here is your SUPER SECRET admin only information")
 })
 
 module.exports = router;
